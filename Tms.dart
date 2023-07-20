@@ -27,7 +27,11 @@ void main() {
   userId = getIdWithName(name);
 
   while (!exit) {
-    print("1.Widthdraw. \n2.Deposit \n3.Balance Inquiry \n4.Exit");
+    print("\n ==============MENU============== \n\n");
+    print("1.Widthdraw. \n2.Deposit \n3.Balance Inquiry \n4.Exit \n");
+    if(userId == 0){
+      print("5.Create Account \n 6.Delete Account \n");
+    }
     Input = int.parse(stdin.readLineSync() ?? '0');
 
     if (Input == 1) {
@@ -44,6 +48,20 @@ void main() {
       print(Check_Balance(userId));
     } else if (Input == 4) {
       exit = true;
+    }
+    else if(userId == 0){
+      if(Input == 5){
+        print(createAccount());
+      }
+      else if(Input == 6){
+
+        print("\n Enter the name of the account holder: ");
+        String delName = stdin.readLineSync() ?? 'null';
+        print(deleteAccount(getIdWithName(delName)));
+      }
+    }
+    else {
+      print("\n Invalid Input!");
     }
   }
 
