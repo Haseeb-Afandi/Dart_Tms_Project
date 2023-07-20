@@ -9,15 +9,42 @@ void main() {
   print("======Welcome to the Transaction Management System======");
 
   bool auth = false;
+  bool exit = false;
+  int userId;
+  int Input = 0;
+  String name = 'null';
 
   while (!auth) {
     print("Enter your Name: ");
-    String name = stdin.readLineSync() ?? 'null';
+    name = stdin.readLineSync() ?? 'null';
 
     print("Enter your 4-digit PIN: ");
     int pin = int.parse(stdin.readLineSync() ?? '0');
 
     auth = authorization(name, pin);
+  }
+
+  userId = getIdWithName(name);
+
+  while (!exit) {
+    print("1.Widthdraw. \n2.Deposit \n3.Balance Inquiry \n4.Exit");
+    Input = int.parse(stdin.readLineSync() ?? '0');
+
+    if (Input == 1) {
+      print("\nEnter amount: ");
+      int amount = int.parse(stdin.readLineSync() ?? '0');
+
+      print(Widthdraw(userId, amount));
+    } else if (Input == 2) {
+      print("\nEnter amount: ");
+      int amount = int.parse(stdin.readLineSync() ?? '0');
+
+      print(Deposit(userId, amount));
+    } else if (Input == 3) {
+      print(Check_Balance(userId));
+    } else if (Input == 4) {
+      exit = true;
+    }
   }
 
   // createAccount();
@@ -46,7 +73,7 @@ String Widthdraw(int Id, int Amount) {
   });
 
   if (Amount > Balance) {
-    return ("Current balance is insufficient for this transaction.");
+    return ("\nCurrent balance is insufficient for this transaction.");
   } else {
     int Index = accounts.indexWhere((element) => element["Id"] == Id);
 
@@ -84,7 +111,7 @@ String Deposit(int Id, int Amount) {
     "Id": Id,
     "Name": accounts[Index]["Name"],
     "Old_Balance": Balance_Old,
-    "Transaction Ammount": (0 - Amount),
+    "Transaction Ammount": (0 + Amount),
     "Current_Balance": Balance
   });
 
@@ -109,7 +136,7 @@ String createAccount() {
 
   accounts.add({"Id": Id, "Name": name, "Pin": pin, "Balance": 0});
 
-  return ("Account created succesfully");
+  return ("\nAccount created succesfully");
 }
 
 String deleteAccount(int Id) {
