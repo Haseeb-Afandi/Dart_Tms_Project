@@ -231,9 +231,13 @@ String createAccount() {
 }
 
 String deleteAccount(int Id) {
-  accounts.removeWhere((element) => element["Id"] == Id);
+  var temp = accounts.where((element) => element['Id'] == Id);
+  if(temp.length > 0){
+    accounts.removeWhere((element) => element["Id"] == Id);
 
   return ("Account deleted succesfully");
+  }
+  return ("\n Account not found!");
 }
 
 int getIdWithName(String name) {
